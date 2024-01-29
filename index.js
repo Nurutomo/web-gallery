@@ -95,6 +95,7 @@ jQuery(window).ready(() => {
 
             let a = document.createElement('a')
             a.className = 'gallery-item'
+            a.setAttribute('href', url)
             a.setAttribute('data-src', url)
             a.setAttribute('data-sub-html', file.name)
 
