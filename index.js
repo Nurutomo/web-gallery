@@ -91,35 +91,52 @@ jQuery(window).ready(() => {
         toggleThumb: true,
     })
 
+    gallery.justifiedGallery({
+        captions: false,
+        lastRow: "hide",
+        rowHeight: 180,
+        margins: 5
+    })
+
     button.click(async () => {
         const filesInDirectory = await openDirectory();
         if (!filesInDirectory) {
             return;
         }
 
-        let newElements = []
+        // let newElements = []
         for (let file of filesInDirectory) {
             if (!file.type.startsWith('image')) continue
             let buffer = await file.arrayBuffer()
             let blob = new Blob([buffer], { type: file.type })
             let url = URL.createObjectURL(blob)
+            
+            let img = new Image
+            let img2 = new Image
+            img.className = 'img-responsive'
 
-            newElements.push({
-                src: url,
-                thumb: url,
-                subHtml: file.name
-            })
+            let a = document.createElement('a')
+            a.className = 'gallery-item'
+            a.setAttribute('href', url)
+            a.setAttribute('data-src', url)
+            a.setAttribute('data-sub-html', file.name)
+
+            img2.onload = function () {
+                a.setAttribute('data-lg-size', `${img2.width}-${img2.height}`)
+            }
+            img.src = url
+            img2.src = url
+            a.appendChild(img)
+            gallery.appendChild(a)
+            // newElements.push({
+            //     src: url,
+            //     thumb: url,
+            //     subHtml: file.name
+            // })
         }
-        dynamicimgGallery.refresh(newElements)
-        dynamicimgGallery.openGallery()
-        // Array.from(filesInDirectory).forEach((file) => (pre.textContent += `${file.name}\n`))
+        gallery.justifiedGallery('destroy')
+        dynamicimgGallery.refresh()
+        // dynamicimgGallery.refresh(newElements)
+        // dynamicimgGallery.openGallery()
     })
-
-    jQuery("#animated-thumbnails-gallery")
-        .justifiedGallery({
-            captions: false,
-            lastRow: "hide",
-            rowHeight: 180,
-            margins: 5
-        })
 })
