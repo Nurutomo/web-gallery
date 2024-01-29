@@ -79,12 +79,16 @@ jQuery(window).ready(() => {
     const dynamicimgGallery = window.lightGallery(gallery, {
         dynamic: true,
         hash: false,
-        rotate: false,
+        rotate: true,
         plugins: [
             lgZoom,
             lgThumbnail
         ],
         dynamicEl: [],
+        animateThumb: true,
+        zoomFromOrigin: false,
+        allowMediaOverlap: true,
+        toggleThumb: true,
     })
 
     button.click(async () => {
