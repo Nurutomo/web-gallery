@@ -89,6 +89,7 @@ jQuery(window).ready(() => {
 
             
             let img = new Image
+            let img2 = new Image
             img.className = 'img-responsive'
             
             let a = document.createElement('a')
@@ -96,14 +97,18 @@ jQuery(window).ready(() => {
             a.setAttribute('data-src', url)
             a.setAttribute('data-sub-html', file.name)
             
-            img.onload = function () {
-                a.setAttribute('data-lg-size', `${img.width}-${img.height}`)
+            img2.onload = function () {
+                a.setAttribute('data-lg-size', `${img2.width}-${img2.height}`)
             }
             img.src = url
+            img2.src= url
             a.appendChild(img)
             gallery.appendChild(a)
         }
-        jQuery("#animated-thumbnails-gallery")
+        // Array.from(filesInDirectory).forEach((file) => (pre.textContent += `${file.name}\n`))
+    })
+
+    jQuery("#animated-thumbnails-gallery")
             .justifiedGallery({
                 captions: false,
                 lastRow: "hide",
@@ -127,7 +132,4 @@ jQuery(window).ready(() => {
                     }
                 );
             });
-
-        // Array.from(filesInDirectory).forEach((file) => (pre.textContent += `${file.name}\n`))
-    })
 })
