@@ -107,8 +107,10 @@ jQuery(window).ready(() => {
             a.appendChild(img)
             gallery.appendChild(a)
         }
-
-        jQuery("#animated-thumbnails-gallery")
+        // Array.from(filesInDirectory).forEach((file) => (pre.textContent += `${file.name}\n`))
+    })
+    
+    jQuery("#animated-thumbnails-gallery")
             .justifiedGallery({
                 captions: false,
                 lastRow: "hide",
@@ -132,7 +134,4 @@ jQuery(window).ready(() => {
                     }
                 );
             });
-
-        // Array.from(filesInDirectory).forEach((file) => (pre.textContent += `${file.name}\n`))
-    })
 })
