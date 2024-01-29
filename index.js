@@ -80,6 +80,7 @@ jQuery(window).ready(() => {
         if (!filesInDirectory) {
             return;
         }
+
         gallery.innerHTML = ''
         for (let file of filesInDirectory) {
             if (!file.type.startsWith('image')) continue
@@ -87,49 +88,29 @@ jQuery(window).ready(() => {
             let blob = new Blob([buffer], { type: file.type })
             let url = URL.createObjectURL(blob)
 
-            
+
             let img = new Image
             let img2 = new Image
             img.className = 'img-responsive'
-            
+
             let a = document.createElement('a')
             a.className = 'gallery-item'
             a.setAttribute('data-src', url)
             a.setAttribute('data-sub-html', file.name)
-            
+
             img2.onload = function () {
                 a.setAttribute('data-lg-size', `${img2.width}-${img2.height}`)
             }
             img.src = url
-            img2.src= url
+            img2.src = url
             a.appendChild(img)
             gallery.appendChild(a)
         }
+
+        lightGallery(document.getElementById('animated-thumbnails-gallery'), {
+            thumbnail: true,
+        });
+        
         // Array.from(filesInDirectory).forEach((file) => (pre.textContent += `${file.name}\n`))
     })
-
-    jQuery("#animated-thumbnails-gallery")
-            .justifiedGallery({
-                captions: false,
-                lastRow: "hide",
-                rowHeight: 180,
-                margins: 5
-            })
-            .on("jg.complete", function () {
-                window.lightGallery(
-                    document.getElementById("animated-thumbnails-gallery"),
-                    {
-                        autoplayFirstVideo: false,
-                        pager: false,
-                        galleryId: "nature",
-                        plugins: [lgZoom, lgThumbnail],
-                        mobileSettings: {
-                            controls: false,
-                            showCloseIcon: false,
-                            download: false,
-                            rotate: false
-                        }
-                    }
-                );
-            });
 })
