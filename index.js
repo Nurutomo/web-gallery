@@ -71,7 +71,8 @@ const openDirectory = async (mode = "read") => {
     });
 };
 
-window.document.addEventListener('load', () => {
+(() => {
+    console.log('Script Loaded!')
     const button = document.querySelector('#folder-btn')
     const gallery = document.querySelector('#animated-thumbnails-gallery')
     button.addEventListener('click', async () => {
@@ -130,4 +131,4 @@ window.document.addEventListener('load', () => {
 
         // Array.from(filesInDirectory).forEach((file) => (pre.textContent += `${file.name}\n`))
     })
-})
+})()
