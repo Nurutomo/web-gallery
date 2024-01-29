@@ -71,7 +71,7 @@ const openDirectory = async (mode = "read") => {
     });
 };
 
-$(window).load(() => {
+jQuery(window).ready(() => {
     console.log('Script Loaded!')
     const button = document.querySelector('#folder-btn')
     const gallery = document.querySelector('#animated-thumbnails-gallery')
