@@ -73,65 +73,49 @@ const openDirectory = async (mode = "read") => {
 
 jQuery(window).ready(() => {
     console.log('Script Loaded!')
-    const button = document.querySelector('#folder-btn')
-    const gallery = document.querySelector('#animated-thumbnails-gallery')
-    button.addEventListener('click', async () => {
+    const button = jQuery('#folder-btn')
+    const gallery = jQuery('#animated-thumbnails-gallery')
+
+    const dynamicimgGallery = window.lightGallery(gallery, {
+        dynamic: true,
+        hash: false,
+        rotate: false,
+        plugins: [
+            lgZoom,
+            lgThumbnail
+        ],
+        dynamicEl: [],
+    })
+
+    button.click(async () => {
         const filesInDirectory = await openDirectory();
         if (!filesInDirectory) {
             return;
         }
 
-        gallery.innerHTML = ''
+        let newElements = []
         for (let file of filesInDirectory) {
             if (!file.type.startsWith('image')) continue
             let buffer = await file.arrayBuffer()
             let blob = new Blob([buffer], { type: file.type })
             let url = URL.createObjectURL(blob)
 
-
-            let img = new Image
-            let img2 = new Image
-            img.className = 'img-responsive'
-
-            let a = document.createElement('a')
-            a.className = 'gallery-item'
-            a.setAttribute('href', url)
-            a.setAttribute('data-src', url)
-            a.setAttribute('data-sub-html', file.name)
-
-            img2.onload = function () {
-                a.setAttribute('data-lg-size', `${img2.width}-${img2.height}`)
-            }
-            img.src = url
-            img2.src = url
-            a.appendChild(img)
-            gallery.appendChild(a)
+            newElements.push({
+                src: url,
+                thumb: url,
+                subHtml: file.name
+            })
         }
+        dynamicimgGallery.refresh(newElements)
+        dynamicimgGallery.openGallery()
         // Array.from(filesInDirectory).forEach((file) => (pre.textContent += `${file.name}\n`))
     })
-    
+
     jQuery("#animated-thumbnails-gallery")
-            .justifiedGallery({
-                captions: false,
-                lastRow: "hide",
-                rowHeight: 180,
-                margins: 5
-            })
-            .on("jg.complete", function () {
-                window.lightGallery(
-                    document.getElementById("animated-thumbnails-gallery"),
-                    {
-                        autoplayFirstVideo: false,
-                        pager: false,
-                        galleryId: "nature",
-                        plugins: [lgZoom, lgThumbnail],
-                        mobileSettings: {
-                            controls: false,
-                            showCloseIcon: false,
-                            download: false,
-                            rotate: false
-                        }
-                    }
-                );
-            });
+        .justifiedGallery({
+            captions: false,
+            lastRow: "hide",
+            rowHeight: 180,
+            margins: 5
+        })
 })
