@@ -87,8 +87,7 @@ jQuery(window).ready(() => {
             let blob = new Blob([buffer], { type: file.type })
             let url = URL.createObjectURL(blob)
 
-            let { width, height } = await getImageAttr(url)
-
+            
             let img = new Image
             img.className = 'img-responsive'
             
@@ -98,7 +97,7 @@ jQuery(window).ready(() => {
             a.setAttribute('data-sub-html', file.name)
             
             img.onload = function () {
-                a.setAttribute('data-lg-size', `${width}-${height}`)
+                a.setAttribute('data-lg-size', `${img.width}-${img.height}`)
             }
             img.src = url
             a.appendChild(img)
@@ -131,4 +130,4 @@ jQuery(window).ready(() => {
 
         // Array.from(filesInDirectory).forEach((file) => (pre.textContent += `${file.name}\n`))
     })
-})()
+})
