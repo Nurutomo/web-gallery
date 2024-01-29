@@ -77,14 +77,14 @@ jQuery(window).ready(() => {
     const gallery = jQuery('#animated-thumbnails-gallery')
 
     const dynamicimgGallery = window.lightGallery(gallery, {
-        dynamic: true,
+        // dynamic: true,
         hash: false,
         rotate: true,
         plugins: [
             lgZoom,
             lgThumbnail
         ],
-        dynamicEl: [],
+        // dynamicEl: [],
         animateThumb: true,
         zoomFromOrigin: false,
         allowMediaOverlap: true,
