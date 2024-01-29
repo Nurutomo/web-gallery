@@ -127,7 +127,7 @@ jQuery(window).ready(() => {
             img.src = url
             img2.src = url
             a.appendChild(img)
-            gallery.appendChild(a)
+            gallery.append(a)
             // newElements.push({
             //     src: url,
             //     thumb: url,
