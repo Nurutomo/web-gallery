@@ -71,6 +71,7 @@ const openDirectory = async (mode = "read") => {
     });
 };
 
+const button = document.querySelector('#folder-btn')
 button.addEventListener('click', async () => {
     const filesInDirectory = await openDirectory();
     if (!filesInDirectory) {
