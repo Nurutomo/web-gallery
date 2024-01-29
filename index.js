@@ -71,7 +71,7 @@ const openDirectory = async (mode = "read") => {
     });
 };
 
-$(document).ready(() => {
+$(window).load(() => {
     console.log('Script Loaded!')
     const button = document.querySelector('#folder-btn')
     const gallery = document.querySelector('#animated-thumbnails-gallery')
@@ -82,7 +82,7 @@ $(document).ready(() => {
         }
         gallery.innerHTML = ''
         for (let file of filesInDirectory) {
-            if (!type.startsWith('image')) continue
+            if (!file.type.startsWith('image')) continue
             let buffer = await file.arrayBuffer()
             let blob = new Blob([buffer], { type: file.type })
             let url = URL.createObjectURL(blob)
