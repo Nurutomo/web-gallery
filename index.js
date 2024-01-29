@@ -71,38 +71,62 @@ const openDirectory = async (mode = "read") => {
     });
 };
 
-document.window.addEventListener('load', () => {
+window.document.addEventListener('load', () => {
     const button = document.querySelector('#folder-btn')
+    const gallery = document.querySelector('#animated-thumbnails-gallery')
     button.addEventListener('click', async () => {
         const filesInDirectory = await openDirectory();
         if (!filesInDirectory) {
             return;
         }
-        console.log(filesInDirectory)
-        // jQuery("#animated-thumbnails-gallery")
-        //     .justifiedGallery({
-        //         captions: false,
-        //         lastRow: "hide",
-        //         rowHeight: 180,
-        //         margins: 5
-        //     })
-        //     .on("jg.complete", function () {
-        //         window.lightGallery(
-        //             document.getElementById("animated-thumbnails-gallery"),
-        //             {
-        //                 autoplayFirstVideo: false,
-        //                 pager: false,
-        //                 galleryId: "nature",
-        //                 plugins: [lgZoom, lgThumbnail],
-        //                 mobileSettings: {
-        //                     controls: false,
-        //                     showCloseIcon: false,
-        //                     download: false,
-        //                     rotate: false
-        //                 }
-        //             }
-        //         );
-        //     });
+        gallery.innerHTML = ''
+        for (let file of filesInDirectory) {
+            if (!type.startsWith('image')) continue
+            let buffer = await file.arrayBuffer()
+            let blob = new Blob([buffer], { type: file.type })
+            let url = URL.createObjectURL(blob)
+
+            let { width, height } = await getImageAttr(url)
+
+            let img = new Image
+            img.className = 'img-responsive'
+            
+            let a = document.createElement('a')
+            a.className = 'gallery-item'
+            a.setAttribute('data-src', url)
+            a.setAttribute('data-sub-html', file.name)
+            
+            img.onload = function () {
+                a.setAttribute('data-lg-size', `${width}-${height}`)
+            }
+            img.src = url
+            a.appendChild(img)
+            gallery.appendChild(a)
+        }
+        jQuery("#animated-thumbnails-gallery")
+            .justifiedGallery({
+                captions: false,
+                lastRow: "hide",
+                rowHeight: 180,
+                margins: 5
+            })
+            .on("jg.complete", function () {
+                window.lightGallery(
+                    document.getElementById("animated-thumbnails-gallery"),
+                    {
+                        autoplayFirstVideo: false,
+                        pager: false,
+                        galleryId: "nature",
+                        plugins: [lgZoom, lgThumbnail],
+                        mobileSettings: {
+                            controls: false,
+                            showCloseIcon: false,
+                            download: false,
+                            rotate: false
+                        }
+                    }
+                );
+            });
 
         // Array.from(filesInDirectory).forEach((file) => (pre.textContent += `${file.name}\n`))
     })
