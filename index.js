@@ -76,26 +76,26 @@ jQuery(window).ready(() => {
     const button = jQuery('#folder-btn')
     const gallery = jQuery('#animated-thumbnails-gallery')
 
-    const dynamicimgGallery = window.lightGallery(gallery, {
-        // dynamic: true,
-        hash: false,
-        rotate: true,
-        plugins: [
-            lgZoom,
-            lgThumbnail
-        ],
-        // dynamicEl: [],
-        animateThumb: true,
-        zoomFromOrigin: false,
-        allowMediaOverlap: true,
-        toggleThumb: true,
-    })
-
     gallery.justifiedGallery({
         captions: false,
         lastRow: "hide",
         rowHeight: 180,
         margins: 5
+    }).on("jg.complete", function () {
+        window.lightGallery(gallery, {
+            // dynamic: true,
+            hash: false,
+            rotate: true,
+            plugins: [
+                lgZoom,
+                lgThumbnail
+            ],
+            // dynamicEl: [],
+            animateThumb: true,
+            zoomFromOrigin: false,
+            allowMediaOverlap: true,
+            toggleThumb: true,
+        })
     })
 
     button.click(async () => {
@@ -134,7 +134,7 @@ jQuery(window).ready(() => {
             //     subHtml: file.name
             // })
         }
-        gallery.justifiedGallery('destroy')
+        // gallery.justifiedGallery('destroy')
         dynamicimgGallery.refresh()
         // dynamicimgGallery.refresh(newElements)
         // dynamicimgGallery.openGallery()
