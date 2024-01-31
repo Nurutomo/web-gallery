@@ -143,19 +143,22 @@ jQuery(window).ready(() => {
             rowHeight: 180,
             margins: 5
         }).on("jg.complete", function () {
-            window.lightGallery(gallery, {
+            window.lightGallery(document.getElementById('#animated-thumbnails-gallery'), {
                 // dynamic: true,
-                hash: false,
                 rotate: true,
-                plugins: [
-                    lgZoom,
-                    lgThumbnail
-                ],
                 // dynamicEl: [],
                 animateThumb: true,
                 zoomFromOrigin: false,
                 allowMediaOverlap: true,
                 toggleThumb: true,
+                pager: false,
+                plugins: [lgZoom, lgThumbnail],
+                mobileSettings: {
+                    controls: false,
+                    showCloseIcon: false,
+                    download: false,
+                    rotate: false
+                }
             })
         })
         // dynamicimgGallery.refresh(newElements)
