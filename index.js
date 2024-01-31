@@ -105,12 +105,13 @@ jQuery(window).ready(() => {
         }
 
         // let newElements = []
+        gallery.html('')
         for (let file of filesInDirectory) {
             if (!file.type.startsWith('image')) continue
             let buffer = await file.arrayBuffer()
             let blob = new Blob([buffer], { type: file.type })
             let url = URL.createObjectURL(blob)
-            
+
             let img = new Image
             let img2 = new Image
             img.className = 'img-responsive'
@@ -128,6 +129,7 @@ jQuery(window).ready(() => {
             img2.src = url
             a.appendChild(img)
             gallery.append(a)
+
             // newElements.push({
             //     src: url,
             //     thumb: url,
@@ -135,7 +137,27 @@ jQuery(window).ready(() => {
             // })
         }
         // gallery.justifiedGallery('destroy')
-        dynamicimgGallery.refresh()
+        gallery.justifiedGallery({
+            captions: false,
+            lastRow: "hide",
+            rowHeight: 180,
+            margins: 5
+        }).on("jg.complete", function () {
+            window.lightGallery(gallery, {
+                // dynamic: true,
+                hash: false,
+                rotate: true,
+                plugins: [
+                    lgZoom,
+                    lgThumbnail
+                ],
+                // dynamicEl: [],
+                animateThumb: true,
+                zoomFromOrigin: false,
+                allowMediaOverlap: true,
+                toggleThumb: true,
+            })
+        })
         // dynamicimgGallery.refresh(newElements)
         // dynamicimgGallery.openGallery()
     })
